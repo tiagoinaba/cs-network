@@ -62,6 +62,6 @@ public class Rede {
 	}
 
 	public override string ToString() {
-		return "Rede{ BSSID: " + this.BSSID + ", RSSI: " + this.RSSI + ", RSSIdBm: " + this.RSSIdBm + "}";
+		return "Rede{ BSSID: " + this.BSSID + ", RSSI: " + this.RSSI + ", RSSIdBm: " + this.RSSIdBm + " }";
 	}
 }
