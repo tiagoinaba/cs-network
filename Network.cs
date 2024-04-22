@@ -51,10 +51,17 @@ class LinuxNetwork : Network {
 }
 
 public class Rede {
-	public required string BSSID { get; set; }
-	public required int	   RSSI  { get; set; }
+	public string BSSID { get; set; }
+	private int _RSSI { get; set; }
+	public int RSSI {
+		get { return _RSSI; }
+		set { _RSSI = value; }
+	}
+	public int RSSIdBm {
+		get { return (_RSSI / 2) - 100; }
+	}
 
 	public override string ToString() {
-		return "Rede{ BSSID: " + this.BSSID + ", RSSI: " + this.RSSI + "}";
+		return "Rede{ BSSID: " + this.BSSID + ", RSSI: " + this.RSSI + ", RSSIdBm: " + this.RSSIdBm + "}";
 	}
 }
