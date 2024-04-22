@@ -10,7 +10,7 @@ class WindowsNetwork : Network {
 		var p = new Process {
 			StartInfo = {
 				FileName = "netsh",
-				Arguments = "wlan show networks",
+				Arguments = "wlan show networks mode=bssid",
 				UseShellExecute = false,
 				RedirectStandardOutput = true,
 			}
@@ -18,14 +18,11 @@ class WindowsNetwork : Network {
 
 		p.Start();
 
-		// Pular primeira linha
-		p.StandardOutput.ReadLine();
 		var output = p.StandardOutput.ReadToEnd();
 
-		var d = new LinuxDecoder();
+		var d = new WindowsDecoder();
 
-		return d.Decode(output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
-
+		return d.Decode(output);
 	}
 }
 
@@ -49,7 +46,7 @@ class LinuxNetwork : Network {
 
 		var d = new LinuxDecoder();
 
-		return d.Decode(output.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries));
+		return d.Decode(output);
 	}
 }
 

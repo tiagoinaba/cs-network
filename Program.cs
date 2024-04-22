@@ -3,13 +3,19 @@
 class Program {
 	static void Main() {
 		Network n;
+		List<Rede> redes;
+
 		switch (true) {
 			case true when RuntimeInformation.OSDescription.ToUpper().Contains("WINDOWS"):
-				Console.WriteLine("windows");
+				n = new WindowsNetwork();
+				redes = n.ListarRedes();
+				redes.ForEach((rede) => {
+						Console.WriteLine(rede);
+						});
 				break;
 			case true when RuntimeInformation.OSDescription.ToUpper().Contains("LINUX"):
 				n = new LinuxNetwork();
-				var redes = n.ListarRedes();
+				redes = n.ListarRedes();
 				redes.ForEach((rede) => {
 						Console.WriteLine(rede);
 						});
