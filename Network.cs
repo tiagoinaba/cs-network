@@ -9,8 +9,8 @@ class WindowsNetwork : Network {
 		// Processo para executar comando no console.
 		var p = new Process {
 			StartInfo = {
-				FileName = "netsh",
-				Arguments = "wlan show networks mode=bssid",
+				FileName = "python",
+				Arguments = "-m lswn",
 				UseShellExecute = false,
 				RedirectStandardOutput = true,
 			}
@@ -51,17 +51,20 @@ class LinuxNetwork : Network {
 }
 
 public class Rede {
-	public string BSSID { get; set; }
-	private int _RSSI { get; set; }
-	public int RSSI {
-		get { return _RSSI; }
-		set { _RSSI = value; }
+	public string BSSID { get; set; } = string.Empty;
+	public string? Nome { get; set; }
+	private int _Sinal { get; set; }
+	public int Sinal {
+		get { return _Sinal; }
+		set { _Sinal = value; }
 	}
 	public int RSSIdBm {
-		get { return (_RSSI / 2) - 100; }
+		get { return (_Sinal / 2) - 100; }
 	}
 
 	public override string ToString() {
-		return "Rede{ BSSID: " + this.BSSID + ", RSSI: " + this.RSSI + ", RSSIdBm: " + this.RSSIdBm + " }";
+		return "Rede{ Nome: " + this.Nome 
+			+ ", BSSID: " + this.BSSID + ", Sinal: " 
+			+ this.Sinal + ", RSSIdBm: " + this.RSSIdBm + " }";
 	}
 }
