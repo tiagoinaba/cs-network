@@ -6,35 +6,10 @@ interface Decoder {
 
 public class WindowsDecoder : Decoder {
 	public List<Rede> Decode(string input) {
+		Console.WriteLine(input);
 		List<Rede>? res = JsonSerializer.Deserialize<List<Rede>>(input);
 		if (res != null) return res;
-
-		string[] lines = input.Split(new[] { "\r\n\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-		var redes = new List<Rede>();
-
-		foreach (string line in lines) {
-			string[] parts = line.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-			string bssid = "";
-			string rssi = "";
-
-			foreach (string p in parts) {
-				string[] prop = p.Split(new[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
-
-				if (prop[0].Contains("BSSID")) {
-					bssid = String.Join(":", prop.Skip(1).Take(6));
-				} else if (prop[0].Contains("Sinal")) {
-					rssi = prop[1].Split("%")[0];
-				}
-			}
-
-			if (bssid != "" && rssi != "")
-				redes.Add(new Rede{
-						BSSID = bssid,
-						Sinal = Int32.Parse(rssi),
-						});
-		}
-
-		return redes;
+		else return new List<Rede>();
 	}
 }
 
@@ -62,8 +37,7 @@ public class LinuxDecoder : Decoder {
 
 			redes.Add(new Rede{
 					BSSID = bssid.Trim(),
-					Sinal = Int32.Parse(rssi),
-					Nome = nome.Trim(),
+					SSID = nome.Trim(),
 					});
 		}
 

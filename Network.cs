@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.Json.Serialization;
 
 interface Network {
 	public List<Rede> ListarRedes(); 
@@ -51,20 +52,17 @@ class LinuxNetwork : Network {
 }
 
 public class Rede {
+	[JsonPropertyName("BSSID")]
 	public string BSSID { get; set; } = string.Empty;
-	public string? Nome { get; set; }
-	private int _Sinal { get; set; }
-	public int Sinal {
-		get { return _Sinal; }
-		set { _Sinal = value; }
-	}
-	public int RSSIdBm {
-		get { return (_Sinal / 2) - 100; }
-	}
+
+	[JsonPropertyName("SSID")]
+	public string? SSID { get; set; }
+
+	[JsonPropertyName("RSSIdBm")]
+	public int RSSIdBm { get; set; }
 
 	public override string ToString() {
-		return "Rede{ Nome: " + this.Nome 
-			+ ", BSSID: " + this.BSSID + ", Sinal: " 
-			+ this.Sinal + ", RSSIdBm: " + this.RSSIdBm + " }";
+		return "Rede{ SSID: " + this.SSID 
+			+ ", BSSID: " + this.BSSID + ", RSSIdBm: " + this.RSSIdBm + " }";
 	}
 }
