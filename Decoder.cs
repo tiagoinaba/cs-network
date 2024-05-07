@@ -6,7 +6,6 @@ interface Decoder {
 
 public class WindowsDecoder : Decoder {
 	public List<Rede> Decode(string input) {
-		Console.WriteLine(input);
 		List<Rede>? res = JsonSerializer.Deserialize<List<Rede>>(input);
 		if (res != null) return res;
 		else return new List<Rede>();
